@@ -31,15 +31,57 @@
 
       <hr style="border:0;border-top:1px solid var(--border); margin:16px 0;">
 
-      <p class="small-muted" style="margin-top:0;">Quick message (opens your email app):</p>
-      <a class="btn primary" href="mailto:yushawurahima@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Rahima%2C%0A%0A">
-        ✉️ Send Email
-      </a>
+      <p class="small-muted" style="margin:0 0 10px;">
+        Quick message:
+      </p>
+
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <!-- Opens default email app (works only if mailto handler is configured) -->
+        <a class="btn primary"
+           href="mailto:yushawurahima@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Rahima%2C%0A%0A">
+          ✉️ Open Email App
+        </a>
+
+        <!-- Fallback: opens Gmail compose in browser -->
+        <a class="btn"
+           href="https://mail.google.com/mail/?view=cm&fs=1&to=yushawurahima@gmail.com&su=Portfolio%20Inquiry&body=Hi%20Rahima%2C%0A%0A"
+           target="_blank" rel="noopener">
+          📬 Open Gmail (Web)
+        </a>
+
+        <!-- Copy email to clipboard -->
+        <button class="btn" type="button" onclick="copyEmail()">
+          📋 Copy Email
+        </button>
+      </div>
+
+      <p class="small-muted" style="margin-top:12px;">
+        If “Open Email App” doesn’t work, your browser/device may not have a default mail app set. Use “Open Gmail (Web)” instead.
+      </p>
     </div>
 
     <div class="footer">© 2026 Rahima Yushawu</div>
   </main>
 
   <script src="script.js"></script>
+  <script>
+    function copyEmail(){
+      const email = "yushawurahima@gmail.com";
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(() => {
+          alert("Copied: " + email);
+        });
+      } else {
+        // fallback for older browsers / non-https
+        const temp = document.createElement("textarea");
+        temp.value = email;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        alert("Copied: " + email);
+      }
+    }
+  </script>
 </body>
 </html>
